@@ -23,6 +23,18 @@ export default function Login() {
     setErro('');
   };
 
+  const handleChangeModal = (e) => {
+    setModalLogin({ ...modalLogin, [e.target.name]: e.target.value });
+    setErroModal('');
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !loadingModal) {
+      e.preventDefault();
+      handleConfirmarModal();
+    }
+  };
+
   // ── Submit do login principal ─────────────────────────────────────────────
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -166,15 +178,18 @@ export default function Login() {
           </>
         }
       >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <form onSubmit={(e) => { e.preventDefault(); handleConfirmarModal(); }} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <div className="form-group">
             <label className="form-label">Login</label>
             <input
               className="form-control"
               placeholder="Login"
+              name="login"
               value={modalLogin.login}
-              onChange={(e) => setModalLogin({ ...modalLogin, login: e.target.value })}
+              onChange={handleChangeModal}
+              onKeyDown={handleKeyDown}
               autoComplete="off"
+              required
             />
           </div>
           <div className="form-group">
@@ -183,13 +198,16 @@ export default function Login() {
               type="password"
               className="form-control"
               placeholder="Senha"
+              name="senha"
               value={modalLogin.senha}
-              onChange={(e) => setModalLogin({ ...modalLogin, senha: e.target.value })}
+              onChange={handleChangeModal}
+              onKeyDown={handleKeyDown}
               autoComplete="new-password"
+              required
             />
           </div>
           {erroModal && <div className="alert alert-danger">{erroModal}</div>}
-        </div>
+        </form>
       </Modal>
     </div>
   );

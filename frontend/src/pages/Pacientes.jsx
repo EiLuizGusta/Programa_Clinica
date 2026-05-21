@@ -161,137 +161,139 @@ export default function Pacientes() {
 
       {/* Tabela */}
       <div className="content-area">
-        <div className="card">
-          {viewMode === 'table' ? (
-            // ── Visualização Tabela ──────────────────────────────────────
-            <div className="table-wrapper">
-              {loading ? (
-                <div className="loading-container">
-                  <span className="spinner spinner-lg" />
-                  <span>Carregando pacientes...</span>
-                </div>
-              ) : pacientesFiltrados.length === 0 ? (
-                <div className="empty-state">
-                  <div className="empty-state-icon">👥</div>
-                  <div className="empty-state-title">Nenhum paciente encontrado</div>
-                  <div className="empty-state-text">Adicione um paciente usando o botão acima.</div>
-                </div>
-              ) : (
-                <table className="table">
-                  <thead>
-                    <tr>
-                      {filtros.has('classificacao') && <th>Classificação</th>}
-                      {filtros.has('nome')     && <th>Nome</th>}
-                      {filtros.has('cpf')      && <th>CPF</th>}
-                      {filtros.has('rg')       && <th>RG</th>}
-                      {filtros.has('celular')  && <th>Celular</th>}
-                      {filtros.has('telefone') && <th>Telefone</th>}
-                      {filtros.has('endereco') && <th>Endereço</th>}
-                      {filtros.has('numero')   && <th>Nº</th>}
-                      <th style={{ width: 90 }}>Ficha</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {pacientesFiltrados.map((p) => (
-                      <tr key={p.id}>
-                        {filtros.has('classificacao') && <td>{p.classificacao}</td>}
-                        {filtros.has('nome')     && <td>{p.nome}</td>}
-                        {filtros.has('cpf')      && <td>{p.cpf}</td>}
-                        {filtros.has('rg')       && <td>{p.rg}</td>}
-                        {filtros.has('celular')  && <td>{p.celular}</td>}
-                        {filtros.has('telefone') && <td>{p.telefone}</td>}
-                        {filtros.has('endereco') && <td>{p.endereco}</td>}
-                        {filtros.has('numero')   && <td>{p.numero}</td>}
-                        <td>
-                          <button
-                            className="btn-icon-image"
-                            onClick={() => navigate(`/ficha/${p.id}`)}
-                          >
-                            <img src={fichaIcon} alt="Ficha" />
-                          </button>
-                        </td>
+        <div className="content-padding">
+          <div className="card">
+            {viewMode === 'table' ? (
+              // ── Visualização Tabela ──────────────────────────────────────
+              <div className="table-wrapper">
+                {loading ? (
+                  <div className="loading-container">
+                    <span className="spinner spinner-lg" />
+                    <span>Carregando pacientes...</span>
+                  </div>
+                ) : pacientesFiltrados.length === 0 ? (
+                  <div className="empty-state">
+                    <div className="empty-state-icon">👥</div>
+                    <div className="empty-state-title">Nenhum paciente encontrado</div>
+                    <div className="empty-state-text">Adicione um paciente usando o botão acima.</div>
+                  </div>
+                ) : (
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        {filtros.has('classificacao') && <th>Classificação</th>}
+                        {filtros.has('nome')     && <th>Nome</th>}
+                        {filtros.has('cpf')      && <th>CPF</th>}
+                        {filtros.has('rg')       && <th>RG</th>}
+                        {filtros.has('celular')  && <th>Celular</th>}
+                        {filtros.has('telefone') && <th>Telefone</th>}
+                        {filtros.has('endereco') && <th>Endereço</th>}
+                        {filtros.has('numero')   && <th>Nº</th>}
+                        <th style={{ width: 90 }}>Ficha</th>
                       </tr>
+                    </thead>
+                    <tbody>
+                      {pacientesFiltrados.map((p) => (
+                        <tr key={p.id}>
+                          {filtros.has('classificacao') && <td>{p.classificacao}</td>}
+                          {filtros.has('nome')     && <td>{p.nome}</td>}
+                          {filtros.has('cpf')      && <td>{p.cpf}</td>}
+                          {filtros.has('rg')       && <td>{p.rg}</td>}
+                          {filtros.has('celular')  && <td>{p.celular}</td>}
+                          {filtros.has('telefone') && <td>{p.telefone}</td>}
+                          {filtros.has('endereco') && <td>{p.endereco}</td>}
+                          {filtros.has('numero')   && <td>{p.numero}</td>}
+                          <td>
+                            <button
+                              className="btn-icon-image"
+                              onClick={() => navigate(`/ficha/${p.id}`)}
+                            >
+                              <img src={fichaIcon} alt="Ficha" />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            ) : (
+              // ── Visualização Card ────────────────────────────────────────
+              <div className="card-grid-wrapper">
+                {loading ? (
+                  <div className="loading-container">
+                    <span className="spinner spinner-lg" />
+                    <span>Carregando pacientes...</span>
+                  </div>
+                ) : pacientesFiltrados.length === 0 ? (
+                  <div className="empty-state">
+                    <div className="empty-state-icon">👥</div>
+                    <div className="empty-state-title">Nenhum paciente encontrado</div>
+                    <div className="empty-state-text">Adicione um paciente usando o botão acima.</div>
+                  </div>
+                ) : (
+                  <div className="cards-grid">
+                    {pacientesFiltrados.map((p) => (
+                      <div key={p.id} className="patient-card">
+                        <div className="patient-card-row">
+                          <div className="patient-card-field">
+                            <span className="patient-card-label">Classificação:</span>
+                            <span className="patient-card-value patient-card-value-id">{p.classificacao}</span>
+                          </div>
+                          <div className="patient-card-field">
+                            <span className="patient-card-label">Nome:</span>
+                            <span className="patient-card-value patient-card-value-nome">{p.nome}</span>
+                          </div>
+                        </div>
+
+                        <div className="patient-card-row">
+                          <div className="patient-card-field">
+                            <span className="patient-card-label">CPF:</span>
+                            <span className="patient-card-value">{p.cpf}</span>
+                          </div>
+                          <div className="patient-card-field">
+                            <span className="patient-card-label">RG:</span>
+                            <span className="patient-card-value">{p.rg}</span>
+                          </div>
+                        </div>
+
+                        <div className="patient-card-row">
+                          <div className="patient-card-field">
+                            <span className="patient-card-label">Celular:</span>
+                            <span className="patient-card-value">{p.celular}</span>
+                          </div>
+                          <div className="patient-card-field">
+                            <span className="patient-card-label">Telefone:</span>
+                            <span className="patient-card-value">{p.telefone}</span>
+                          </div>
+                        </div>
+
+                        <div className="patient-card-row">
+                          <div className="patient-card-field">
+                            <span className="patient-card-label">Endereço:</span>
+                            <span className="patient-card-value patient-card-value-endereco">{p.endereco}</span>
+                          </div>
+                          <div className="patient-card-field">
+                            <span className="patient-card-label">nº:</span>
+                            <span className="patient-card-value patient-card-value-numero">{p.numero}</span>
+                          </div>
+                        </div>
+
+                        <div className="patient-card-footer">
+                            <button
+                              className="btn-icon-image"
+                              onClick={() => navigate(`/ficha/${p.id}`)}
+                            >
+                              <img src={fichaIcon} alt="Ficha" />
+                            </button>
+                        </div>
+                      </div>
                     ))}
-                  </tbody>
-                </table>
-              )}
-            </div>
-          ) : (
-            // ── Visualização Card ────────────────────────────────────────
-            <div className="card-grid-wrapper">
-              {loading ? (
-                <div className="loading-container">
-                  <span className="spinner spinner-lg" />
-                  <span>Carregando pacientes...</span>
-                </div>
-              ) : pacientesFiltrados.length === 0 ? (
-                <div className="empty-state">
-                  <div className="empty-state-icon">👥</div>
-                  <div className="empty-state-title">Nenhum paciente encontrado</div>
-                  <div className="empty-state-text">Adicione um paciente usando o botão acima.</div>
-                </div>
-              ) : (
-                <div className="cards-grid">
-                  {pacientesFiltrados.map((p) => (
-                    <div key={p.id} className="patient-card">
-                      <div className="patient-card-row">
-                        <div className="patient-card-field">
-                          <span className="patient-card-label">Classificação:</span>
-                          <span className="patient-card-value patient-card-value-id">{p.classificacao}</span>
-                        </div>
-                        <div className="patient-card-field">
-                          <span className="patient-card-label">Nome:</span>
-                          <span className="patient-card-value patient-card-value-nome">{p.nome}</span>
-                        </div>
-                      </div>
-
-                      <div className="patient-card-row">
-                        <div className="patient-card-field">
-                          <span className="patient-card-label">CPF:</span>
-                          <span className="patient-card-value">{p.cpf}</span>
-                        </div>
-                        <div className="patient-card-field">
-                          <span className="patient-card-label">RG:</span>
-                          <span className="patient-card-value">{p.rg}</span>
-                        </div>
-                      </div>
-
-                      <div className="patient-card-row">
-                        <div className="patient-card-field">
-                          <span className="patient-card-label">Celular:</span>
-                          <span className="patient-card-value">{p.celular}</span>
-                        </div>
-                        <div className="patient-card-field">
-                          <span className="patient-card-label">Telefone:</span>
-                          <span className="patient-card-value">{p.telefone}</span>
-                        </div>
-                      </div>
-
-                      <div className="patient-card-row">
-                        <div className="patient-card-field">
-                          <span className="patient-card-label">Endereço:</span>
-                          <span className="patient-card-value patient-card-value-endereco">{p.endereco}</span>
-                        </div>
-                        <div className="patient-card-field">
-                          <span className="patient-card-label">nº:</span>
-                          <span className="patient-card-value patient-card-value-numero">{p.numero}</span>
-                        </div>
-                      </div>
-
-                      <div className="patient-card-footer">
-                        <button
-                          className="btn btn-primary btn-sm"
-                          onClick={() => navigate(`/ficha/${p.id}`)}
-                        >
-                          📋 Ficha
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
