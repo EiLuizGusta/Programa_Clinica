@@ -1,0 +1,14 @@
+name: Manter Render Acordado
+
+on:
+  schedule:
+    # Roda a cada 12 minutos, todos os dias
+    - cron: '*/12 * * * *'
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dar um ping no backend do Render
+        run: |
+          curl -I https://seu-backend.onrender.com/api/
