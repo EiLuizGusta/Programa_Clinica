@@ -11,4 +11,4 @@ jobs:
     steps:
       - name: Dar um ping no backend do Render
         run: |
-          curl -I https://seu-backend.onrender.com/api/
+          curl -I https://programa-clinica-backend.onrender.com/
