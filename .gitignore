@@ -1,0 +1,28 @@
+# 1. Python / Django (Backend para o Render)
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+.venv/
+venv/
+env/
+backend/media/
+backend/staticfiles/
+# Banco de dados local
+*.sqlite3
+# 2. Node / Vite / React (Frontend para Cloudflare)
+**/node_modules/
+**/dist/
+**/dist-ssr/
+# 3. Arquivos de Configuração e Segredos (CRUCIAL)
+.env
+.env.production
+.env.development
+**/*.local
+# Logs e arquivos do sistema
+*.log
+.DS_Store
+Thumbs.db
+Adicionar Paciente.txt
+code.txt
+servidores.txt
