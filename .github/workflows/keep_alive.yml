@@ -4,6 +4,10 @@ on:
   schedule:
     # Roda a cada 12 minutos, todos os dias
     - cron: '*/12 * * * *'
+  push:
+    branches:
+      - main
+  workflow_dispatch: # <-- Esta linha mágica cria o botão manual!
 
 jobs:
   ping:
