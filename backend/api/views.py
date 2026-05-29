@@ -58,9 +58,7 @@ def login_view(request):
     refresh['empresa_id'] = empresa.id
     refresh['empresa_nome'] = empresa.nome_fantasia
 
-    logo_url = None
-    if empresa.logo:
-        logo_url = request.build_absolute_uri(empresa.logo.url)
+    logo_base64 = empresa.logo if empresa.logo else None
 
     return Response({
         'access': str(refresh.access_token),
@@ -69,7 +67,7 @@ def login_view(request):
             'id': empresa.id,
             'razao_social': empresa.razao_social,
             'nome_fantasia': empresa.nome_fantasia,
-            'logo': logo_url,
+            'logo': logo_base64,
         },
     })
 

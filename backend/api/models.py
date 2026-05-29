@@ -5,9 +5,7 @@ class Empresa(models.Model):
     razao_social = models.CharField(max_length=255, verbose_name='Razão Social')
     nome_fantasia = models.CharField(max_length=255, verbose_name='Nome Fantasia')
     cnpj = models.CharField(max_length=18, verbose_name='CNPJ')  # XX.XXX.XXX/XXXX-XX
-    logo = models.ImageField(
-        upload_to='logos/', null=True, blank=True, verbose_name='Logo'
-    )
+    logo = models.TextField(null=True, blank=True, verbose_name='Logo Base64')
 
     class Meta:
         db_table = 'empresa'
@@ -17,29 +15,6 @@ class Empresa(models.Model):
 
     def __str__(self):
         return self.nome_fantasia
-
-    def save(self, *args, **kwargs):
-            if self.pk:
-                try:
-                    old = Empresa.objects.get(pk=self.pk)
-                    if old.logo and old.logo != self.logo:
-                        try:
-                            if old.logo.storage.exists(old.logo.name):
-                                old.logo.storage.delete(old.logo.name)
-                        except Exception:
-                            pass
-                except Empresa.DoesNotExist:
-                    pass
-            super().save(*args, **kwargs)
-
-    def delete(self, *args, **kwargs):
-        if self.logo:
-            try:
-                if self.logo.storage.exists(self.logo.name):
-                    self.logo.storage.delete(self.logo.name)
-            except Exception:
-                pass
-        super().delete(*args, **kwargs)
 
 class EmpresaLogin(models.Model):
     login = models.CharField(max_length=255, verbose_name='Login')

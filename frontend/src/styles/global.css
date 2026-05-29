@@ -1253,8 +1253,8 @@ textarea.form-control {
 }
 
 .sidebar.closed {
-  max-width: 80px;
-  width: 80px;
+  max-width: 70px;
+  width: 70px;
 }
 
 .sidebar.open {
@@ -1273,11 +1273,9 @@ textarea.form-control {
 }
 
 .sidebar-header-top {
-  width: 100%;
   display: flex;
-  align-items: center;
   justify-content: flex-start;
-  gap: 0.5rem;
+  align-items: center;
 }
 
 .sidebar.closed .sidebar-header {
@@ -1289,45 +1287,31 @@ textarea.form-control {
 }
 
 .sidebar-header .sidebar-logo {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-  border-radius: var(--radius-sm);
-  flex-shrink: 0;
+  width: 85%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  display: block;
+  margin: 0 auto;
 }
 
 .sidebar-header .sidebar-title {
-  position: relative;
-  font-weight: 600;
   font-size: 0.88rem;
+  font-weight: 600;
   line-height: 1.15rem;
   color: var(--color-text);
-  width: 100%;
-  max-width: 150px;
   text-align: center;
+  width: 100%;
+  max-width: 20ch;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   word-break: keep-all;
   overflow-wrap: break-word;
-  max-height: 2.3rem;
-}
-
-.sidebar-header .sidebar-title::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 35%;
-  height: 1.15rem;
-  pointer-events: none;
-  background: linear-gradient(
-    to right,
-    rgba(255,255,255,0),
-    var(--color-surface)
-  );
+  text-overflow: ellipsis;
+  margin: 0 auto;
 }
 
 .sidebar-header .sidebar-icon {
@@ -1336,6 +1320,17 @@ textarea.form-control {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.sidebar-company-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.75rem;
+
+  padding: 0.75rem 0;
 }
 
 /* Menu da Sidebar */
@@ -1520,54 +1515,47 @@ textarea.form-control {
   .sidebar-mobile-overlay {
     display: none !important;
   }
+  
+  .sidebar-mobile .sidebar-logo {
+    width: 60%;
+  }
 }
 
 /* Mobile: Esconder sidebar desktop body, apenas header visível como botão fixo */
 @media (max-width: 768px) {
   .sidebar-desktop {
-    display: flex !important;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 80px;
-    height: 80px;
-    z-index: 950;
-    flex-direction: row;
-    border: none;
-    border-right: 1px solid var(--color-border);
-    background: var(--color-surface);
-    overflow: visible;
+    display: none !important;
   }
 
-  .sidebar-desktop .sidebar-header {
-    width: 100%;
-    height: 100%;
-    padding: 0.5rem;
-    border: none;
+  .mobile-menu-floating-button {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 960;
+    width: 52px;
+    height: 52px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
     display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: center;
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    transition:
+      transform var(--transition),
+      background var(--transition);
   }
 
-  .sidebar-desktop .sidebar-header-top {
-    justify-content: center;
-    width: 100%;
+  .mobile-menu-floating-button:hover {
+    transform: scale(1.05);
+    background: var(--color-primary-light);
   }
 
-  .sidebar-desktop .sidebar-nav,
-  .sidebar-desktop .sidebar-footer,
-  .sidebar-desktop .sidebar-header-top img,
-  .sidebar-desktop .sidebar-title {
-    display: none !important;
-  }
-
-  .sidebar-desktop .btn-icon-toggle {
-    margin: 0;
-  }
-
-  .btn-toggle-mobile-sidebar {
-    display: none !important;
+  .mobile-menu-floating-button img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
   }
 }
 
@@ -1868,4 +1856,53 @@ textarea.form-control {
   border-top: 1px solid var(--color-border);
   display: flex;
   justify-content: center;
+}
+
+/* ── Logo empresa ───────────────────────────── */
+
+.empresa-logo-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.empresa-logo-center {
+  display: flex;
+  justify-content: center;
+  padding-top: 0.5rem;
+}
+
+.empresa-logo-button {
+  width: 100px;
+  height: 100px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: #f3f4f6;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform var(--transition),
+    filter var(--transition),
+    border-color var(--transition);
+}
+
+.empresa-logo-button:hover {
+  transform: scale(1.05);
+  filter: brightness(0.92);
+  border-color: var(--color-primary);
+}
+
+.empresa-logo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.empresa-logo-placeholder-icon {
+  width: 42px;
+  height: 42px;
+  opacity: 0.7;
 }

@@ -50,7 +50,7 @@ class EmpresaLoginListSerializer(serializers.ModelSerializer):
 # ── Empresa ──────────────────────────────────────────────────────────────────
 
 class EmpresaSerializer(serializers.ModelSerializer):
-    logo = Base64ImageField(required=False, allow_null=True)
+    logo = serializers.CharField(required=False, allow_null=True, allow_blank=True)
     logins = EmpresaLoginListSerializer(many=True, read_only=True)
 
     class Meta:

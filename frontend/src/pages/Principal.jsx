@@ -60,25 +60,19 @@ export default function Principal() {
           <aside className="sidebar-mobile" onClick={(e) => e.stopPropagation()}>
             {/* Cabeçalho da Sidebar Mobile */}
             <div className="sidebar-header">
-              <div className="sidebar-header-top">
-                <button className="btn-icon-toggle" onClick={closeMobileSidebar} title="Fechar menu">
-                  <img src={imgBotaoRecolher} alt="Ícone Fechar Menu" />
-                </button>
-
+              <div className="sidebar-company-area">
                 {empresa?.logo ? (
-                  <img src={empresa.logo} alt="Logo" className="sidebar-logo" />
-                ) : (
                   <img
-                    src={iconePadrao}
-                    alt="Clínica"
-                    className="sidebar-default-icon"
+                    src={empresa.logo}
+                    alt="Logo"
+                    className="sidebar-logo"
                   />
+                ) : (
+                  <span className="sidebar-title">
+                    {empresa?.nome_fantasia}
+                  </span>
                 )}
               </div>
-
-              {empresa?.nome_fantasia && (
-                <span className="sidebar-title">{empresa.nome_fantasia}</span>
-              )}
             </div>
 
             {/* Menu Items */}
@@ -112,28 +106,43 @@ export default function Principal() {
         </div>
       )}
 
+      {isMobile && (
+        <button
+          className="mobile-menu-floating-button"
+          onClick={handleToggleSidebar}
+        >
+          <img src={imgBotaoRecolher} alt="Menu" />
+        </button>
+      )}
+
       {/* Sidebar Desktop */}
       <aside className={`sidebar sidebar-desktop ${sidebarOpen ? 'open' : 'closed'}`}>
         {/* Cabeçalho da Sidebar */}
         <div className="sidebar-header">
           <div className="sidebar-header-top">
-            <button className="btn-icon-toggle" onClick={handleToggleSidebar} title="Recolher menu">
+            <button
+              className="btn-icon-toggle"
+              onClick={handleToggleSidebar}
+              title="Recolher menu"
+            >
               <img src={imgBotaoRecolher} alt="Ícone Recolher Menu" />
             </button>
-
-            {sidebarOpen && (empresa?.logo ? (
-              <img src={empresa.logo} alt="Logo" className="sidebar-logo" />
-            ) : (
-              <img
-                src={iconePadrao}
-                alt="Clínica"
-                className="sidebar-default-icon"
-              />
-            ))}
           </div>
 
-          {sidebarOpen && empresa?.nome_fantasia && (
-            <span className="sidebar-title">{empresa.nome_fantasia}</span>
+          {sidebarOpen && (
+            <div className="sidebar-company-area">
+              {empresa?.logo ? (
+                <img
+                  src={empresa.logo}
+                  alt="Logo"
+                  className="sidebar-logo"
+                />
+              ) : (
+                <span className="sidebar-title">
+                  {empresa?.nome_fantasia}
+                </span>
+              )}
+            </div>
           )}
         </div>
 

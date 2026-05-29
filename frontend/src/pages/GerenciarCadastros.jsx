@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ROUTES from '../routes';
 import Modal from '../components/Modal';
 import ConfirmModal from '../components/ConfirmModal';
 import FilterPanel from '../components/FilterPanel';
-import { maskCNPJ } from '../utils/masks';
+import { maskCNPJ, resizeLogoTo100 } from '../utils/masks';
+import adicionarLogoIcon from '../icons/adicionar_logo.png';
 
 // Instância sem o interceptor de 401→/login, pois esta tela é pública
 const api = axios.create({ headers: { 'Content-Type': 'application/json' } });
@@ -54,6 +55,8 @@ export default function GerenciarCadastros() {
   const [erroLogin, setErroLogin]     = useState('');
   const [confirmDeleteLogin, setConfirmDeleteLogin] = useState(false);
   const [deletingLogin, setDeletingLogin]           = useState(false);
+
+  const fileInputRef = useRef(null);
 
   // ── Carregar empresas ─────────────────────────────────────────────────────
   const fetchEmpresas = useCallback(async () => {
@@ -113,6 +116,23 @@ export default function GerenciarCadastros() {
   };
 
   // ── Empresa: salvar (cria ou atualiza) ────────────────────────────────────
+  const handleSelecionarLogo = async (e) => {
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    try {
+      const logoBase64 = await resizeLogoTo100(file);
+
+      setEmpresa((prev) => ({
+        ...prev,
+        logo: logoBase64,
+      }));
+    } catch (err) {
+      alert('Erro ao processar imagem.');
+    }
+  };
+
   const salvarEmpresa = async () => {
     if (!empresa.razao_social.trim() || !empresa.nome_fantasia.trim()) {
       setErroEmpresa('Razão Social e Nome Fantasia são obrigatórios.');
@@ -125,6 +145,7 @@ export default function GerenciarCadastros() {
         razao_social:  empresa.razao_social,
         nome_fantasia: empresa.nome_fantasia,
         cnpj:          empresa.cnpj,
+        logo: empresa.logo,
       };
       let saved;
       if (empresa.id) {
@@ -391,6 +412,55 @@ export default function GerenciarCadastros() {
               onChange={(e) => setEmpresa({ ...empresa, nome_fantasia: e.target.value })}
               placeholder="Nome Fantasia"
             />
+          </div>
+          <div className="form-group" style={{ gridColumn: '1 / -1' }}>
+            <div className="empresa-logo-topbar">
+              <label className="form-label">Logo</label>
+
+              <button
+                type="button"
+                className="btn btn-danger btn-sm"
+                onClick={() =>
+                  setEmpresa((prev) => ({
+                    ...prev,
+                    logo: null,
+                  }))
+                }
+                disabled={!empresa.logo}
+              >
+                Apagar
+              </button>
+            </div>
+
+            <div className="empresa-logo-center">
+              <button
+                type="button"
+                className="empresa-logo-button"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                {empresa.logo ? (
+                  <img
+                    src={empresa.logo}
+                    alt="Logo"
+                    className="empresa-logo-image"
+                  />
+                ) : (
+                  <img
+                    src={adicionarLogoIcon}
+                    alt="Adicionar Logo"
+                    className="empresa-logo-placeholder-icon"
+                  />
+                )}
+              </button>
+
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                style={{ display: 'none' }}
+                onChange={handleSelecionarLogo}
+              />
+            </div>
           </div>
         </div>
 

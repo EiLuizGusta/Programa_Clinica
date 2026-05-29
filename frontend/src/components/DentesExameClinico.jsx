@@ -1,15 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import api from '../api';
 import ROUTES from '../routes';
+import ExameClinico from "../icons/ExameClinico.jpeg";
 
-/**
- * Componente para marcar e descrever dentes no exame clínico.
- * Props:
- *   exameClinicoId  — ID do exame clínico
- *   editando        — boolean, está em modo edição
- *   onChange        — fn(dentesEditando), callback quando dentes são alterados
- *   onDelete        — fn(denteId), callback quando um dente é deletado (opcional)
- */
 export default function DentesExameClinico({ exameClinicoId, editando, onChange, onDelete, endpoint, titulo, tipo }) {
   const handleImageClick = (e) => {
     const rect = e.target.getBoundingClientRect();
@@ -240,8 +233,8 @@ export default function DentesExameClinico({ exameClinicoId, editando, onChange,
         </div>
       )}
       <div className="dentes-imagem-container">
-        <img onClick={handleImageClick} src={ROUTES.media('/media/ExameClinico/ExameClinico.jpeg')} alt="Mapa de dentes" className="dentes-imagem" />
-        
+        <img
+          onClick={handleImageClick} src={ExameClinico} alt="Mapa de dentes" className="dentes-imagem"/>
         {/* Botões hotspots */}
         {HOTSPOTS.map((hotspot) => {
           const key = `${hotspot.numero}_${hotspot.posicao}`;

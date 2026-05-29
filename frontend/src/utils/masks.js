@@ -1,9 +1,3 @@
-/**
- * utils/masks.js
- * Funções de máscara para campos de formulário.
- * Uso: value = maskCPF(e.target.value)
- */
-
 export const maskCPF = (v = '') => {
   v = v.replace(/\D/g, '').slice(0, 11);
   v = v.replace(/(\d{3})(\d)/, '$1.$2');
@@ -73,5 +67,42 @@ export const compressImage = (dataUrl, quality = 0.6, maxWidth = 1200) => {
     };
     img.onerror = () => resolve(dataUrl); // fallback sem compressão
     img.src = dataUrl;
+  });
+};
+
+export const resizeLogoTo100 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = 100;
+        canvas.height = 100;
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, 100, 100);
+        // centraliza crop quadrado
+        const size = Math.min(img.width, img.height);
+        const sx = (img.width - size) / 2;
+        const sy = (img.height - size) / 2;
+        ctx.drawImage(
+          img,
+          sx,
+          sy,
+          size,
+          size,
+          0,
+          0,
+          100,
+          100
+        );
+        resolve(canvas.toDataURL('image/jpeg', 0.8));
+      };
+      img.onerror = reject;
+      img.src = reader.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
   });
 };
